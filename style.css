@@ -33,11 +33,11 @@ td{
     width: 20px;
     cursor: pointer;
     background-color: white;
-    transition: transform 1s;
+    transition: transform 0.5s;
 }
 
 td:hover{
-    transform: rotate(360deg);
+    transform: rotate(10deg);
 }
 
 #igual{
