@@ -1,4 +1,5 @@
 const divDeResultado = document.getElementById('telaDeResultado')
+divDeResultado.innerText = 0
 const container = document.getElementById('container')
 // console.log(container)
 const teclas = container.querySelector('#tabela')
@@ -7,7 +8,11 @@ teclas.addEventListener('click', e => {    //Evento que ouve todas as teclas
     if(e.target.matches('td')) {             //O matches retorna verdadeiro ou falso, ouseja, clicado ou não    
         const key = e.target                   // A variável key recebe a tecla que foi clicada(alvo)
         const action = key.dataset.action     //A variável action recebe as teclas que tem o atributo action
-        if(!action) {                        //verifica se o atributo data da tecla clicada é igual action 
+        const minhaString = divDeResultado.textContent.toString()
+        if(!action) { 
+            if(divDeResultado.innerText == 0)   {
+                divDeResultado.innerText = ''                     //verifica se o atributo data da tecla clicada é igual action 
+            }
             divDeResultado.innerText += key.textContent
         }
         if(
@@ -17,14 +22,21 @@ teclas.addEventListener('click', e => {    //Evento que ouve todas as teclas
             action === 'divisao' ||
             action === 'porcentagem'
         ) {
-    
+            if(minhaString.indexOf(key.textContent) == -1){
+                divDeResultado.innerText += key.textContent
+            }
+          
         }
         if (action === 'decimal') {
             
+            if(minhaString.indexOf(',') == -1){
+                divDeResultado.innerText += key.textContent
+            }
+          
           }
           
           if (action === 'limpar') {
-            
+            divDeResultado.innerText = minhaString.slice(0, -1)
           }
 
           if (action === 'limparTudo') {
@@ -35,7 +47,10 @@ teclas.addEventListener('click', e => {    //Evento que ouve todas as teclas
             
           }
     }
+
 })
+
+
 
 
 
