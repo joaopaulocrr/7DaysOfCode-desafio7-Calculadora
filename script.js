@@ -7,13 +7,20 @@ const teclas = container.querySelector('#tabela')
 teclas.addEventListener('click', e => {    //Evento que ouve todas as teclas 
     if(e.target.matches('td')) {             //O matches retorna verdadeiro ou falso, ouseja, clicado ou não    
         const key = e.target                   // A variável key recebe a tecla que foi clicada(alvo)
+    
         const action = key.dataset.action     //A variável action recebe as teclas que tem o atributo action
         const minhaString = divDeResultado.textContent.toString()
+        const previousKeyType = teclas.dataset.previousKeyType
+
         if(!action) { 
-            if(divDeResultado.innerText == 0)   {
-                divDeResultado.innerText = ''                     //verifica se o atributo data da tecla clicada é igual action 
+            if(divDeResultado.innerText == 0 || previousKeyType === 'operacao' )   {
+                divDeResultado.innerText = key.textContent 
+                       
+            }else{
+
+                divDeResultado.innerText += key.textContent
             }
-            divDeResultado.innerText += key.textContent
+        
         }
         if(
             action === 'adicao' ||
@@ -22,9 +29,9 @@ teclas.addEventListener('click', e => {    //Evento que ouve todas as teclas
             action === 'divisao' ||
             action === 'porcentagem'
         ) {
-            if(minhaString.indexOf(key.textContent) == -1){
-                divDeResultado.innerText += key.textContent
-            }
+
+            key.classList.add('is-depressed')
+            teclas.dataset.previousKeyType = 'operacao'
           
         }
         if (action === 'decimal') {
@@ -36,7 +43,12 @@ teclas.addEventListener('click', e => {    //Evento que ouve todas as teclas
           }
           
           if (action === 'limpar') {
+            if(divDeResultado.textContent.length < 0) {
+                
+                divDeResultado.innerText = 0
+            }
             divDeResultado.innerText = minhaString.slice(0, -1)
+            console.log(divDeResultado.textContent.length)
           }
 
           if (action === 'limparTudo') {
@@ -46,22 +58,10 @@ teclas.addEventListener('click', e => {    //Evento que ouve todas as teclas
           if (action === 'calculate') {
             
           }
+          
+        Array.from(key.parentNode.children)
+        .forEach(k => k.classList.remove('is-depressed'))
     }
 
 })
 
-
-
-
-
-// const minhaTabela =document.getElementById('tabela')
-// console.log(minhaTabela)
-
-// const linha = minhaTabela.rows[1]
-// console.log(linha)
-
-// const celula = linha.cells[0]
-// console.log(celula.textContent)
-
-// const igual = document.getElementById('igual')
-// console.log(igual.textContent)
